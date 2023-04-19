@@ -3,13 +3,14 @@ import * as Yup from "yup";
 import { Button, Snackbar, Alert } from "@mui/material";
 import axios from "axios";
 import { useState } from "react";
+import PropTypes from "prop-types";
 
 const authenticationFormSchema = Yup.object({
   login: Yup.string().required("Обязательное поле"),
   password: Yup.string().required("Обязательное поле"),
 });
 
-const AuthenticationForm = () => {
+const AuthenticationForm = ({ onGetProfile }) => {
   const [error, setError] = useState(null);
   const [open, setOpen] = useState(false);
 
@@ -31,8 +32,6 @@ const AuthenticationForm = () => {
   };
 
   const logIn = async (values, actions) => {
-    actions.resetForm();
-
     try {
       const { data } = await axios.post(
         `${process.env.REACT_APP_API_URL}/auth`,
@@ -40,6 +39,8 @@ const AuthenticationForm = () => {
       );
 
       localStorage.setItem("token", data.token);
+      actions.resetForm();
+      await onGetProfile();
     } catch (err) {
       if (err?.response?.data?.message) {
         setError(err?.response?.data?.message);
@@ -92,6 +93,10 @@ const AuthenticationForm = () => {
       </Form>
     </Formik>
   );
+};
+
+AuthenticationForm.propTypes = {
+  onGetProfile: PropTypes.func.isRequired,
 };
 
 export default AuthenticationForm;
