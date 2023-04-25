@@ -1,11 +1,17 @@
-import PropTypes from "prop-types";
 import { Button, Avatar } from "@mui/material";
+import { useContext } from "react";
+import { NewsContext } from "../App";
+import { useNavigate } from "react-router-dom";
 
-const UserInfo = ({ userProfile, onLogOut }) => {
+const UserInfo = () => {
+  const { userProfile, logOut } = useContext(NewsContext);
+  const navigate = useNavigate();
+
   const { name, avatar } = userProfile;
 
-  const logOut = () => {
-    onLogOut();
+  const handleClick = () => {
+    logOut();
+    navigate("/");
   };
 
   return (
@@ -13,21 +19,11 @@ const UserInfo = ({ userProfile, onLogOut }) => {
       <span>Hello: {`${name}`}</span>
       <Avatar alt={name} src={avatar} />
 
-      <Button variant="outlined" color="error" onClick={logOut}>
+      <Button variant="outlined" color="error" onClick={handleClick}>
         Logout
       </Button>
     </div>
   );
-};
-
-UserInfo.propTypes = {
-  userProfile: PropTypes.shape({
-    avatar: PropTypes.string.isRequired,
-    id: PropTypes.string.isRequired,
-    login: PropTypes.string.isRequired,
-    name: PropTypes.string.isRequired,
-  }).isRequired,
-  onLogOut: PropTypes.func.isRequired,
 };
 
 export default UserInfo;

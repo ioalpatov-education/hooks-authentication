@@ -2,15 +2,19 @@ import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import { Button, Snackbar, Alert } from "@mui/material";
 import axios from "axios";
-import { useState } from "react";
-import PropTypes from "prop-types";
+import { useState, useContext } from "react";
+import { NewsContext } from "../App";
+import { useNavigate } from "react-router-dom";
 
 const authenticationFormSchema = Yup.object({
   login: Yup.string().required("Обязательное поле"),
   password: Yup.string().required("Обязательное поле"),
 });
 
-const AuthenticationForm = ({ onGetProfile }) => {
+const AuthenticationForm = () => {
+  const { getProfile } = useContext(NewsContext);
+  const navigate = useNavigate();
+
   const [error, setError] = useState(null);
   const [open, setOpen] = useState(false);
 
@@ -24,9 +28,7 @@ const AuthenticationForm = ({ onGetProfile }) => {
   };
 
   const handleClose = (event, reason) => {
-    if (reason === "clickaway") {
-      return;
-    }
+    if (reason === "clickaway") return;
 
     setOpen(false);
   };
@@ -40,7 +42,8 @@ const AuthenticationForm = ({ onGetProfile }) => {
 
       localStorage.setItem("token", data.token);
       actions.resetForm();
-      await onGetProfile();
+      await getProfile();
+      navigate("/news");
     } catch (err) {
       if (err?.response?.data?.message) {
         setError(err?.response?.data?.message);
@@ -93,10 +96,6 @@ const AuthenticationForm = ({ onGetProfile }) => {
       </Form>
     </Formik>
   );
-};
-
-AuthenticationForm.propTypes = {
-  onGetProfile: PropTypes.func.isRequired,
 };
 
 export default AuthenticationForm;

@@ -40,11 +40,7 @@ const NewsList = () => {
 
     return (
       <Card className="news-card" sx={{ maxWidth: 345 }} key={id}>
-        <CardMedia
-          component="img"
-          alt="green iguana"
-          image={image}
-        />
+        <CardMedia component="img" alt="green iguana" image={image} />
         <CardContent>
           <Typography gutterBottom variant="h5" component="div">
             {title}
