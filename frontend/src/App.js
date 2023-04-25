@@ -1,5 +1,6 @@
 import "./App.css";
 import AuthorizationPage from "./NetoSocial/AuthorizationPage";
+import NewsListPage from "./NetoSocial/NewsListPage";
 import NewsPage from "./NetoSocial/NewsPage";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { createContext, useState } from "react";
@@ -48,7 +49,10 @@ function App() {
         <Router>
           <Routes>
             <Route path="/" element={<AuthorizationPage />} />
-            <Route path="/news" element={<NewsPage />} />
+            <Route path="/news">
+              <Route path="" element={<NewsListPage />} />
+              <Route path=":id" element={<NewsPage />} />
+            </Route>
           </Routes>
         </Router>
       </NewsContext.Provider>

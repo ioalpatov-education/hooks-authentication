@@ -1,6 +1,7 @@
 import axios from "axios";
 import { Card, CardContent, CardMedia, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 
 const NewsList = () => {
   const [news, setNews] = useState([]);
@@ -40,7 +41,9 @@ const NewsList = () => {
 
     return (
       <Card className="news-card" sx={{ maxWidth: 345 }} key={id}>
-        <CardMedia component="img" alt="green iguana" image={image} />
+        <Link to={`/news/${id}`}>
+          <CardMedia component="img" alt="green iguana" image={image} />
+        </Link>
         <CardContent>
           <Typography gutterBottom variant="h5" component="div">
             {title}

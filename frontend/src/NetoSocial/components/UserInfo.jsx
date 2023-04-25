@@ -1,6 +1,6 @@
 import { Button, Avatar } from "@mui/material";
 import { useContext } from "react";
-import { NewsContext } from "../App";
+import { NewsContext } from "../../App";
 import { useNavigate } from "react-router-dom";
 
 const UserInfo = () => {

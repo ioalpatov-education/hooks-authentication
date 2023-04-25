@@ -3,7 +3,7 @@ import * as Yup from "yup";
 import { Button, Snackbar, Alert } from "@mui/material";
 import axios from "axios";
 import { useState, useContext } from "react";
-import { NewsContext } from "../App";
+import { NewsContext } from "../../App";
 import { useNavigate } from "react-router-dom";
 
 const authenticationFormSchema = Yup.object({

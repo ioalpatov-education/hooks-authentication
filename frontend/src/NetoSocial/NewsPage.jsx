@@ -1,47 +1,53 @@
-import NewsList from "./NewsList";
-import UserInfo from "./UserInfo";
-import { CircularProgress } from "@mui/material";
-import { useEffect, useState, useContext } from "react";
-import { NewsContext } from "../App";
-import { useNavigate } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { Card, CardMedia } from "@mui/material";
+import axios from "axios";
 
 const NewsPage = () => {
-  const [loading, setLoading] = useState(false);
-  const { userProfile, setUserProfile } = useContext(NewsContext);
+  const [newsById, setNewsById] = useState([]);
   const navigate = useNavigate();
 
+  const { id } = useParams();
+
   useEffect(() => {
-    setLoading(true);
     if (!localStorage.getItem("token")) {
       navigate("/");
-      setLoading(false);
       return;
     }
 
-    setUserProfile(JSON.parse(localStorage.getItem("profile")));
-    setLoading(false);
+    (async () => {
+      await getNewsById();
+    })();
   }, []);
 
-  const headerRight = !!userProfile ? <UserInfo /> : null;
+  const getNewsById = async () => {
+    try {
+      const { data } = await axios.get(
+        `${process.env.REACT_APP_API_URL}/private/news/${id}`,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      );
 
-  const bodyContent = !!userProfile ? <NewsList /> : null;
+      setNewsById(data);
+    } catch (err) {
+      if (err?.response?.status === 401) {
+        localStorage.clear();
+      }
+      if (err?.response?.data?.message) {
+        throw new Error(err.message);
+      } else {
+        throw new Error(err.message);
+      }
+    }
+  };
 
   return (
-    <div className="neto-social">
-      {loading ? (
-        <div className="loader-container">
-          <CircularProgress />
-        </div>
-      ) : (
-        <>
-          <header className="neto-social__header">
-            <h3>Neto Social</h3>
-            {headerRight}
-          </header>
-          {bodyContent}
-        </>
-      )}
-    </div>
+    <Card className="news-card" sx={{ maxWidth: 345 }}>
+      <CardMedia component="img" alt="green iguana" image={newsById.image} />
+    </Card>
   );
 };
 
