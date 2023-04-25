@@ -1,4 +1,3 @@
-import AuthenticationForm from "./components/AuthenticationForm";
 import { Box, CircularProgress } from "@mui/material";
 import { useEffect, useState, useContext } from "react";
 import { NewsContext } from "../App";
@@ -22,33 +21,27 @@ const AuthorizationPage = () => {
   }, []);
 
   return (
-    <div className="neto-social">
+    <>
       {loading ? (
         <div className="loader-container">
           <CircularProgress />
         </div>
       ) : (
-        <>
-          <header className="neto-social__header">
-            <h3>Neto Social</h3>
-            <AuthenticationForm />
-          </header>
-          <section className="info-section">
-            <Box
-              className="info-section__box"
-              sx={{
-                width: "75%",
-                height: 300,
-                backgroundColor: "#d3dae9",
-              }}
-            >
-              <h1>Neto Social</h1>
-              <h4>Facebook and VK killer.</h4>
-            </Box>
-          </section>
-        </>
+        <section className="info-section">
+          <Box
+            className="info-section__box"
+            sx={{
+              width: "75%",
+              height: 300,
+              backgroundColor: "#d3dae9",
+            }}
+          >
+            <h1>Neto Social</h1>
+            <h4>Facebook and VK killer.</h4>
+          </Box>
+        </section>
       )}
-    </div>
+    </>
   );
 };
 

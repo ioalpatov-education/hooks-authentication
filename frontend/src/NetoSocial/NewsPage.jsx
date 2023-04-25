@@ -1,11 +1,13 @@
 import { useParams, useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useEffect, useState,useContext } from "react";
 import { Card, CardContent, CardMedia, Typography } from "@mui/material";
 import axios from "axios";
+import { NewsContext } from "../App";
 
 const NewsPage = () => {
   const [newsById, setNewsById] = useState([]);
   const [error, setError] = useState(false);
+  const { setUserProfile } = useContext(NewsContext);
 
   const navigate = useNavigate();
 
@@ -16,6 +18,8 @@ const NewsPage = () => {
       navigate("/");
       return;
     }
+
+    setUserProfile(JSON.parse(localStorage.getItem("profile")));
 
     (async () => {
       await getNewsById();

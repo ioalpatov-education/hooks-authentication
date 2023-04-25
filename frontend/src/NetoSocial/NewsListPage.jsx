@@ -1,5 +1,4 @@
 import NewsList from "./components/NewsList";
-import UserInfo from "./components/UserInfo";
 import { CircularProgress } from "@mui/material";
 import { useEffect, useState, useContext } from "react";
 import { NewsContext } from "../App";
@@ -22,26 +21,18 @@ const NewsListPage = () => {
     setLoading(false);
   }, []);
 
-  const headerRight = !!userProfile ? <UserInfo /> : null;
-
   const bodyContent = !!userProfile ? <NewsList /> : null;
 
   return (
-    <div className="neto-social">
+    <>
       {loading ? (
         <div className="loader-container">
           <CircularProgress />
         </div>
       ) : (
-        <>
-          <header className="neto-social__header">
-            <h3>Neto Social</h3>
-            {headerRight}
-          </header>
-          {bodyContent}
-        </>
+        <>{bodyContent}</>
       )}
-    </div>
+    </>
   );
 };
 
