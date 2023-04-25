@@ -27,6 +27,11 @@
   height: 100%;
 }
 
+.news-card-wrapper {
+  display: flex;
+  justify-content: center;
+}
+
 .user-info {
   display: flex;
   align-items: center;
@@ -70,4 +75,10 @@
 .error-text {
   position: absolute;
   color: #d80000;
+}
+
+.error-page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
